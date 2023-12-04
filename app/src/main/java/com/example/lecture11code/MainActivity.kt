@@ -5,6 +5,8 @@ package com.example.lecture11code
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +34,14 @@ import com.example.lecture11code.data.ArtPiece
 import com.example.lecture11code.ui.main.ArtState
 import kotlinx.coroutines.launch
 import androidx.compose.material3.Card
+import androidx.compose.material3.Surface
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.CardDefaults
+import androidx.compose.runtime.mutableStateOf
 
 
 class MainActivity : ComponentActivity() {
@@ -63,64 +73,113 @@ fun MainContent(artState: ArtState) {
         artState.getArtwork()
     }
 
-    LazyColumn(content = {
-        items(artState.artwork.value.size) {
+    LazyColumn(
+        modifier = Modifier
+            .background(Color(0xFFFFC107))
+            .fillMaxSize(),
+        content = {
+            items(artState.artwork.value.size) {
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
 
-            ) {
-                ShuffleButton(
-                    onClick = {
-                        artState.getArtwork()
-                    },
-                ) {}
+                ) {
+                    ShuffleButton(
+                        onClick = {
+                            artState.getArtwork()
+                        },
+                    ) {}
 
-                DisplayArtPiece(artState.artwork.value[currentArtIndex.intValue])
+                    DisplayArtPiece(
+                        artState.artwork.value[currentArtIndex.intValue],
+                    )
+
+                }
 
             }
+        })
 
-        }
-    })
 }
+
 
 @Composable
 fun DisplayArtPiece(artPiece: ArtPiece) {
+
+    val (showAdditionalInfo, setShowAdditionalInfo) = remember { mutableStateOf(false) }
+
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFF7D451B),
+        ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp) // Adjust padding as needed
+            .padding(20.dp)
+            .animateContentSize()
+            .clickable { // Toggle visibility on card click
+                setShowAdditionalInfo(!showAdditionalInfo)
+            }
 
-    ){
-        Column (
+
+    ) {
+        Column(
             modifier = Modifier.padding(20.dp)
-        ){
-            Text(text = artPiece.name ?: "No name")
-            Text(text = artPiece.type ?: "No type")
-            Text(text = artPiece.address1 ?: "No address1")
-            Text(text = artPiece.address2 ?: "No address2")
-            Text(text = artPiece.address3 ?: "No address3")
-            Text(text = artPiece.city ?: "No city")
-            Text(text = artPiece.stateProvince ?: "No state/province")
-            Text(text = artPiece.postalCode ?: "No postal code")
-            Text(text = artPiece.country ?: "No country")
-            Text(text = artPiece.longitude ?: "No longitude")
-            Text(text = artPiece.latitude ?: "No latitude")
-            Text(text = artPiece.phone ?: "No phone")
-            Text(text = artPiece.websiteUrl ?: "No website URL")
-            Text(text = artPiece.state ?: "No state")
-            Text(text = artPiece.street ?: "No street")
+        ) {
+            Text(
+                text = artPiece.name ?: "No name",
+                style = TextStyle(fontSize = 20.sp, color = Color.White)
+            )
+
+            // Display the type of art piece
+            Surface(
+                modifier = Modifier.padding(vertical = 8.dp),
+                color = Color(0xFF7D451B)
+
+            ) {
+                Column {
+                    Text(text = artPiece.type ?: "No type", style = TextStyle(color = Color.White))
+                }
+            }
+
+            // Show or hide additional information based on click
+
+            if (showAdditionalInfo) {
+                Surface(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                    ,
+                    color = Color(0xFF7D451B)
+                ) {
+                    Column (
+                        modifier = Modifier
+                            .height(400.dp)
+                    ) {
+                        Text(text = "City: ${artPiece.city ?: "No city"}")
+                        Text(text = "State/Province: ${artPiece.stateProvince ?: "No state/province"}")
+                        Text(text = "Country: ${artPiece.country ?: "No country"}")
+                    }
+                }
+
+                Surface(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    color = Color(0xFF7D451B)
+                ) {
+                    Column {
+                        Text(text = "Additional Information:")
+                        Text(text = "Website URL: ${artPiece.websiteUrl ?: "No website URL"}")
+                        Text(text = "Phone: ${artPiece.phone ?: "No phone"}")
+                    }
+                }
+            }
         }
     }
-
 }
 
 @Composable
 fun ShuffleButton(
     onClick: suspend () -> Unit,
     shape: androidx.compose.ui.graphics.Shape = FloatingActionButtonDefaults.extendedFabShape,
-    containerColor: Color = FloatingActionButtonDefaults.containerColor,
+    containerColor: Color = Color(0xFFFFFFFF), // This is the Material Design Orange 500 color
     contentColor: Color = contentColorFor(containerColor),
     elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -135,7 +194,7 @@ fun ShuffleButton(
         },
         modifier = Modifier
             .width(width = 200.dp)
-            .padding(top = 10.dp),
+            .padding(top = 50.dp),
         shape = shape,
         containerColor = containerColor,
         contentColor = contentColor,
