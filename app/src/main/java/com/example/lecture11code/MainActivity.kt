@@ -38,8 +38,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.mutableStateOf
 
@@ -108,9 +108,11 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
 
     val (showAdditionalInfo, setShowAdditionalInfo) = remember { mutableStateOf(false) }
 
-    val nameTextSize = if (showAdditionalInfo) 50.sp else 20.sp // Change text size based on showAdditionalInfo
+    val nameTextSize =
+        if (showAdditionalInfo) 50.sp else 20.sp // Change text size based on showAdditionalInfo
 
-    val cityTextSize = if (showAdditionalInfo) 35.sp else 17.sp // Change text size based on showAdditionalInfo
+    val cityTextSize =
+        if (showAdditionalInfo) 35.sp else 17.sp // Change text size based on showAdditionalInfo
 
 
 
@@ -146,9 +148,12 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
 
             ) {
                 Column {
-                    Text(text = artPiece.city ?: "", style = TextStyle(
-                        color = Color.White,
-                        fontSize = cityTextSize))
+                    Text(
+                        text = artPiece.city ?: "", style = TextStyle(
+                            color = Color.White,
+                            fontSize = cityTextSize
+                        )
+                    )
                 }
             }
 
@@ -157,23 +162,35 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
             if (showAdditionalInfo) {
                 Surface(
                     modifier = Modifier
-                        .padding(vertical = 8.dp)
-                    ,
+                        .padding(vertical = 8.dp),
                     color = Color(0xFF7D451B)
                 ) {
-                    Column (
+                    Column(
                         modifier = Modifier
-                            .height(400.dp)
+                            .fillMaxHeight()
                     ) {
 
-                        Text(text = "Type: ${artPiece.type ?: "No type"}",
+                        Text(
+                            text = "Type: ${artPiece.type ?: "No type"}",
                             style = TextStyle(
                                 fontSize = 20.sp,
                                 color = Color.White
                             )
                         )
-                        Text(text = "State/Province: ${artPiece.stateProvince ?: "No state/province"}")
-                        Text(text = "Country: ${artPiece.country ?: "No country"}")
+                        Text(
+                            text = "State/Province: ${artPiece.stateProvince ?: "No state/province"}",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.White
+                            )
+                        )
+                        Text(
+                            text = "Country: ${artPiece.country ?: "No country"}",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.White
+                            )
+                        )
                     }
                 }
 
@@ -182,9 +199,25 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
                     color = Color(0xFF7D451B)
                 ) {
                     Column {
-                        Text(text = "Additional Information:")
-                        Text(text = "Website URL: ${artPiece.websiteUrl ?: "No website URL"}")
-                        Text(text = "Phone: ${artPiece.phone ?: "No phone"}")
+                        Text(
+                            text = "Additional Information:", style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.White
+                            )
+                        )
+                        Text(
+                            text = "Website URL: ${artPiece.websiteUrl ?: "No website URL"}",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.White
+                            )
+                        )
+                        Text(
+                            text = "Phone: ${artPiece.phone ?: "No phone"}", style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.White
+                            )
+                        )
                     }
                 }
             }
