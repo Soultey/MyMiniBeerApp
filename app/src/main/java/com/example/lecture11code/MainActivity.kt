@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -38,10 +39,19 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.painterResource
 
 
 class MainActivity : ComponentActivity() {
@@ -108,12 +118,16 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
 
     val (showAdditionalInfo, setShowAdditionalInfo) = remember { mutableStateOf(false) }
 
+    var isIconRotated by remember { mutableStateOf(false) } // State to manage arrow icon rotation
+
+
     val nameTextSize =
         if (showAdditionalInfo) 50.sp else 20.sp // Change text size based on showAdditionalInfo
 
     val cityTextSize =
         if (showAdditionalInfo) 35.sp else 17.sp // Change text size based on showAdditionalInfo
 
+    var imageResource by remember { mutableIntStateOf(R.drawable.brewerypane) } // Initial image resource
 
 
     Card(
@@ -126,138 +140,170 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
             .animateContentSize()
             .clickable { // Toggle visibility on card click
                 setShowAdditionalInfo(!showAdditionalInfo)
-            }
+                isIconRotated = !isIconRotated // Toggle icon rotation
+                imageResource = if (showAdditionalInfo) R.drawable.brewerypane else R.drawable.brewery
 
+            }
 
     ) {
-        Column(
-            modifier = Modifier.padding(20.dp)
-        ) {
-            Text(
-                text = artPiece.name ?: "No name",
-                style = TextStyle(
-                    fontSize = nameTextSize,
-                    color = Color.White
-                )
+        Box(modifier = Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(id = imageResource),
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .alpha(0.3f)
             )
 
-            // Display the type of art piece
-            Surface(
-                modifier = Modifier.padding(vertical = 8.dp),
-                color = Color(0xFF7D451B)
-
+            Column(
+                modifier = Modifier.padding(20.dp)
             ) {
-                Column {
-                    Text(
-                        text = artPiece.city ?: "", style = TextStyle(
-                            color = Color.White,
-                            fontSize = cityTextSize
-                        )
-                    )
-                }
-            }
-
-            // Show or hide additional information based on click
-
-            if (showAdditionalInfo) {
-                Surface(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp),
-                    color = Color(0xFF7D451B)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxHeight()
+                    Text(
+                        text = artPiece.name ?: "No name",
+                        style = TextStyle(
+                            fontSize = nameTextSize,
+                            color = Color.White
+                        ),
+                        modifier = Modifier.weight(1f)
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(start = 8.dp)
                     ) {
-
-                        Text(
-                            text = "Type: ${artPiece.type ?: "No type"}",
-                            style = TextStyle(
-                                fontSize = 20.sp,
-                                color = Color.White
-                            )
-                        )
-                        Text(
-                            text = "State/Province: ${artPiece.stateProvince ?: "No state/province"}",
-                            style = TextStyle(
-                                fontSize = 20.sp,
-                                color = Color.White
-                            )
-                        )
-                        Text(
-                            text = "Country: ${artPiece.country ?: "No country"}",
-                            style = TextStyle(
-                                fontSize = 20.sp,
-                                color = Color.White
-                            )
+                        Icon(
+                            imageVector = if (isIconRotated) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowLeft,
+                            contentDescription = null,
+                            tint = Color.White
                         )
                     }
                 }
 
                 Surface(
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    color = Color(0xFF7D451B)
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                    ,
+                    color = Color(0xFF7D451B).copy(alpha = 0.0f) // Set the alpha value here
                 ) {
                     Column {
                         Text(
-                            text = "Additional Information:", style = TextStyle(
-                                fontSize = 20.sp,
-                                color = Color.White
-                            )
+                            text = artPiece.city ?: "", style = TextStyle(
+                                color = Color.White,
+                                fontSize = cityTextSize,
+
                         )
-                        Text(
-                            text = "Website URL: ${artPiece.websiteUrl ?: "No website URL"}",
-                            style = TextStyle(
-                                fontSize = 20.sp,
-                                color = Color.White
-                            )
                         )
-                        Text(
-                            text = "Phone: ${artPiece.phone ?: "No phone"}", style = TextStyle(
-                                fontSize = 20.sp,
-                                color = Color.White
+                    }
+                }
+
+                // Show or hide additional information based on click
+
+                if (showAdditionalInfo) {
+                    Surface(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp),
+                        color = Color(0xFF7D451B)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                        ) {
+
+                            Text(
+                                text = "Type: ${artPiece.type ?: "No type"}",
+                                style = TextStyle(
+                                    fontSize = 20.sp,
+                                    color = Color.White
+                                )
                             )
-                        )
+                            Text(
+                                text = "State/Province: ${artPiece.stateProvince ?: "No state/province"}",
+                                style = TextStyle(
+                                    fontSize = 20.sp,
+                                    color = Color.White
+                                )
+                            )
+                            Text(
+                                text = "Country: ${artPiece.country ?: "No country"}",
+                                style = TextStyle(
+                                    fontSize = 20.sp,
+                                    color = Color.White
+                                )
+                            )
+                        }
+                    }
+
+                    Surface(
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        color = Color(0xFF7D451B)
+                    ) {
+                        Column {
+                            Text(
+                                text = "Additional Information:", style = TextStyle(
+                                    fontSize = 20.sp,
+                                    color = Color.White
+                                )
+                            )
+                            Text(
+                                text = "Website URL: ${artPiece.websiteUrl ?: "No website URL"}",
+                                style = TextStyle(
+                                    fontSize = 20.sp,
+                                    color = Color.White
+                                )
+                            )
+                            Text(
+                                text = "Phone: ${artPiece.phone ?: "No phone"}", style = TextStyle(
+                                    fontSize = 20.sp,
+                                    color = Color.White
+                                )
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
-
-@Composable
-fun ShuffleButton(
-    onClick: suspend () -> Unit,
-    shape: androidx.compose.ui.graphics.Shape = FloatingActionButtonDefaults.extendedFabShape,
-    containerColor: Color = Color(0xFFFACB40), // This is the Material Design Orange 500 color
-    contentColor: Color = contentColorFor(containerColor),
-    elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable RowScope.() -> Unit
-) {
-    val coroutineScope = rememberCoroutineScope()
-    ExtendedFloatingActionButton(
-        onClick = {
-            coroutineScope.launch {
-                onClick()
-            }
-        },
-        modifier = Modifier
-            .width(width = 200.dp)
-            .padding(top = 50.dp),
-        shape = shape,
-        containerColor = containerColor,
-        contentColor = contentColor,
-        elevation = elevation,
-        interactionSource = interactionSource
+    @Composable
+    fun ShuffleButton(
+        onClick: suspend () -> Unit,
+        shape: androidx.compose.ui.graphics.Shape = FloatingActionButtonDefaults.extendedFabShape,
+        containerColor: Color = Color(0xFFFACB40), // This is the Material Design Orange 500 color
+        contentColor: Color = contentColorFor(containerColor),
+        elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
+        interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+        content: @Composable RowScope.() -> Unit
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+        val coroutineScope = rememberCoroutineScope()
+        ExtendedFloatingActionButton(
+            onClick = {
+                coroutineScope.launch {
+                    onClick()
+                }
+            },
+            modifier = Modifier
+                .width(width = 200.dp)
+                .padding(top = 50.dp),
+            shape = shape,
+            containerColor = containerColor,
+            contentColor = contentColor,
+            elevation = elevation,
+            interactionSource = interactionSource
         ) {
-            Text("New Brew")
-            content()
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text("New Brew")
+                content()
+            }
         }
     }
-}
+
 
