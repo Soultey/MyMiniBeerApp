@@ -75,7 +75,7 @@ fun MainContent(artState: ArtState) {
 
     LazyColumn(
         modifier = Modifier
-            .background(Color(0xFFFFC107))
+            .background(Color(0xFFFFFFFF))
             .fillMaxSize(),
         content = {
             items(artState.artwork.value.size) {
@@ -108,6 +108,12 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
 
     val (showAdditionalInfo, setShowAdditionalInfo) = remember { mutableStateOf(false) }
 
+    val nameTextSize = if (showAdditionalInfo) 50.sp else 20.sp // Change text size based on showAdditionalInfo
+
+    val cityTextSize = if (showAdditionalInfo) 35.sp else 17.sp // Change text size based on showAdditionalInfo
+
+
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF7D451B),
@@ -127,7 +133,10 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
         ) {
             Text(
                 text = artPiece.name ?: "No name",
-                style = TextStyle(fontSize = 20.sp, color = Color.White)
+                style = TextStyle(
+                    fontSize = nameTextSize,
+                    color = Color.White
+                )
             )
 
             // Display the type of art piece
@@ -137,7 +146,9 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
 
             ) {
                 Column {
-                    Text(text = artPiece.type ?: "No type", style = TextStyle(color = Color.White))
+                    Text(text = artPiece.city ?: "", style = TextStyle(
+                        color = Color.White,
+                        fontSize = cityTextSize))
                 }
             }
 
@@ -154,7 +165,13 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
                         modifier = Modifier
                             .height(400.dp)
                     ) {
-                        Text(text = "City: ${artPiece.city ?: "No city"}")
+
+                        Text(text = "Type: ${artPiece.type ?: "No type"}",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.White
+                            )
+                        )
                         Text(text = "State/Province: ${artPiece.stateProvince ?: "No state/province"}")
                         Text(text = "Country: ${artPiece.country ?: "No country"}")
                     }
@@ -179,7 +196,7 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
 fun ShuffleButton(
     onClick: suspend () -> Unit,
     shape: androidx.compose.ui.graphics.Shape = FloatingActionButtonDefaults.extendedFabShape,
-    containerColor: Color = Color(0xFFFFFFFF), // This is the Material Design Orange 500 color
+    containerColor: Color = Color(0xFFFACB40), // This is the Material Design Orange 500 color
     contentColor: Color = contentColorFor(containerColor),
     elevation: FloatingActionButtonElevation = FloatingActionButtonDefaults.elevation(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
