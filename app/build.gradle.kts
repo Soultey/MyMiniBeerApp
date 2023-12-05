@@ -53,6 +53,8 @@ dependencies {
 
     // top 4 added
 
+    implementation("androidx.navigation:navigation-compose:2.7.5")
+
     implementation("io.coil-kt:coil-compose:2.5.0")
 
     implementation("io.ktor:ktor-client-android:2.3.0")
@@ -60,7 +62,7 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:2.3.0")
     implementation("io.ktor:ktor-serialization-gson:2.3.0")
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.1")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
