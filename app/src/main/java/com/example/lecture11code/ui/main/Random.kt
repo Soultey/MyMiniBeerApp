@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lecture11code.R
@@ -119,125 +120,135 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
             }
 
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = imageResource),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .alpha(0.3f)
-            )
+        CardContent(showAdditionalInfo, artPiece, imageResource, nameTextSize, isIconRotated, cityTextSize)
+    }
+}
 
-            Column(
-                modifier = Modifier.padding(20.dp)
+
+@Composable
+fun CardContent(showAdditionalInfo: Boolean, artPiece: ArtPiece, imageResource: Int, nameTextSize: TextUnit, isIconRotated: Boolean, cityTextSize: TextUnit ){
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(id = imageResource),
+            contentDescription = "",
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .alpha(0.3f)
+        )
+
+        Column(
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                Text(
+                    text = artPiece.name ?: "No name",
+                    style = TextStyle(
+                        fontSize = nameTextSize,
+                        color = Color.White
+                    ),
+                    modifier = Modifier.weight(1f)
+                )
                 Row(
+                    horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    modifier = Modifier.padding(start = 8.dp)
                 ) {
-                    Text(
-                        text = artPiece.name ?: "No name",
-                        style = TextStyle(
-                            fontSize = nameTextSize,
-                            color = Color.White
-                        ),
-                        modifier = Modifier.weight(1f)
+                    Icon(
+                        imageVector = if (isIconRotated) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowLeft,
+                        contentDescription = null,
+                        tint = Color.White
                     )
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(start = 8.dp)
-                    ) {
-                        Icon(
-                            imageVector = if (isIconRotated) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowLeft,
-                            contentDescription = null,
-                            tint = Color.White
-                        )
-                    }
                 }
+            }
 
-                Surface(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp),
-                    color = Color(0xFF7D451B).copy(alpha = 0.0f) // Set the alpha value here
-                ) {
-                    Column {
-                        Text(
-                            text = artPiece.city ?: "", style = TextStyle(
-                                color = Color.White,
-                                fontSize = cityTextSize,
+            Surface(
+                modifier = Modifier
+                    .padding(vertical = 8.dp),
+                color = Color(0xFF7D451B).copy(alpha = 0.0f) // Set the alpha value here
+            ) {
+                Column {
+                    Text(
+                        text = artPiece.city ?: "", style = TextStyle(
+                            color = Color.White,
+                            fontSize = cityTextSize,
 
-                                )
-                        )
-                    }
+                            )
+                    )
                 }
+            }
+            ShowAddInfo(showAdditionalInfo, artPiece)
+        }
+    }
 
-                // Show or hide additional information based on click
 
-                if (showAdditionalInfo) {
-                    Surface(
-                        modifier = Modifier
-                            .padding(vertical = 8.dp),
-                        color = Color(0xFF7D451B)
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxHeight()
-                        ) {
+}
 
-                            Text(
-                                text = "Type: ${artPiece.type ?: "No type"}",
-                                style = TextStyle(
-                                    fontSize = 20.sp,
-                                    color = Color.White
-                                )
-                            )
-                            Text(
-                                text = "State/Province: ${artPiece.stateProvince ?: "No state/province"}",
-                                style = TextStyle(
-                                    fontSize = 20.sp,
-                                    color = Color.White
-                                )
-                            )
-                            Text(
-                                text = "Country: ${artPiece.country ?: "No country"}",
-                                style = TextStyle(
-                                    fontSize = 20.sp,
-                                    color = Color.White
-                                )
-                            )
-                        }
-                    }
+@Composable
+fun ShowAddInfo(showAdditionalInfo: Boolean, artPiece: ArtPiece){
+    if (showAdditionalInfo) {
+        Surface(
+            modifier = Modifier
+                .padding(vertical = 8.dp),
+            color = Color(0xFF7D451B)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+            ) {
 
-                    Surface(
-                        modifier = Modifier.padding(vertical = 8.dp),
-                        color = Color(0xFF7D451B)
-                    ) {
-                        Column {
-                            Text(
-                                text = "Additional Information:", style = TextStyle(
-                                    fontSize = 20.sp,
-                                    color = Color.White
-                                )
-                            )
-                            Text(
-                                text = "Website URL: ${artPiece.websiteUrl ?: "No website URL"}",
-                                style = TextStyle(
-                                    fontSize = 20.sp,
-                                    color = Color.White
-                                )
-                            )
-                            Text(
-                                text = "Phone: ${artPiece.phone ?: "No phone"}", style = TextStyle(
-                                    fontSize = 20.sp,
-                                    color = Color.White
-                                )
-                            )
-                        }
-                    }
-                }
+                Text(
+                    text = "Type: ${artPiece.type ?: "No type"}",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        color = Color.White
+                    )
+                )
+                Text(
+                    text = "State/Province: ${artPiece.stateProvince ?: "No state/province"}",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        color = Color.White
+                    )
+                )
+                Text(
+                    text = "Country: ${artPiece.country ?: "No country"}",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        color = Color.White
+                    )
+                )
+            }
+        }
+
+        Surface(
+            modifier = Modifier.padding(vertical = 8.dp),
+            color = Color(0xFF7D451B)
+        ) {
+            Column {
+                Text(
+                    text = "Additional Information:", style = TextStyle(
+                        fontSize = 20.sp,
+                        color = Color.White
+                    )
+                )
+                Text(
+                    text = "Website URL: ${artPiece.websiteUrl ?: "No website URL"}",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        color = Color.White
+                    )
+                )
+                Text(
+                    text = "Phone: ${artPiece.phone ?: "No phone"}", style = TextStyle(
+                        fontSize = 20.sp,
+                        color = Color.White
+                    )
+                )
             }
         }
     }
