@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -32,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.example.lecture11code.R
 
 @Composable
-fun Search(){
+fun Search() {
     ComponentPlacement()
 }
 
@@ -40,7 +43,7 @@ fun Search(){
 @Composable
 fun ComponentPlacement() {
     Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(35.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
@@ -57,7 +60,7 @@ fun ComponentPlacement() {
             SearchBar()
         }
 
-        Column{
+        Column {
             ResultCards(count = 4)
         }
     }
@@ -74,39 +77,47 @@ fun SearchBar() {
         onValueChange = {
             value = it
         },
-        textStyle = TextStyle.Default.copy(fontSize = 20.sp),
+        textStyle = TextStyle.Default.copy(fontSize = 15.sp),
         shape = MaterialTheme.shapes.small, // Use small rounded shape
         colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color(0xFFFBE29E),
-        )
+            containerColor = Color(0xFFFEFAFD),
+        ),
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Rounded.Search,
+                contentDescription = ""
+            )
+        },
+        modifier = Modifier
+            .height(48.dp) // Adjust the height of the TextField
     )
 }
 
 @Composable
 fun ResultCards(count: Int) {
     LazyColumn {
-        items(count) { index ->
-            BreweryCard(index = index)
+        items(count) {
+            BreweryCard()
         }
     }
 }
 
 @Composable
-fun BreweryCard(index: Int) {
+fun BreweryCard() {
     Card(
         modifier = Modifier
-            .width(300.dp)
+            .width(450.dp)
             .padding(12.dp)
             .clickable { /* Handle card click */ }
             .height(90.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF7D451B),
+            containerColor = Color(0xFF976744),
         )
     ) {
         // You can customize the content inside the card here
         Image(
-            painter = painterResource(id = R.drawable.brewerypane),
-            contentDescription = "Brewery Image $index",
+            painter = painterResource(id = R.drawable.brewerypane2),
+            contentDescription = "",
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
