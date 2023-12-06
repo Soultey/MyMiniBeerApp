@@ -66,7 +66,8 @@ fun Random(artState: ArtState){
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
 
                 ) {
                     ShuffleButton(
@@ -261,7 +262,7 @@ fun ShuffleButton(
         },
         modifier = Modifier
             .width(width = 200.dp)
-            .padding(top = 50.dp),
+            .padding(top = 40.dp, bottom = 30.dp),
         shape = shape,
         containerColor = containerColor,
         contentColor = contentColor,
