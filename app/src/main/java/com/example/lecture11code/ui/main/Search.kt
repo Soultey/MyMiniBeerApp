@@ -39,48 +39,45 @@ fun Search() {
     ComponentPlacement()
 }
 
-
 @Composable
 fun ComponentPlacement() {
     Column(
-        verticalArrangement = Arrangement.spacedBy(35.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(35.dp), // Space between columns
+        horizontalAlignment = Alignment.CenterHorizontally, // Center items horizontally
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 45.dp)
+            .fillMaxWidth() // Occupy maximum width
+            .padding(top = 45.dp) // Add top padding
     ) {
         Column {
             Text(
                 text = "Search Breweries",
-                style = TextStyle(fontSize = 24.sp)
+                style = TextStyle(fontSize = 24.sp) // Set font size for text
             )
         }
 
         Column {
-            SearchBar()
+            SearchBar() // Display search bar component
         }
 
         Column {
-            ResultCards(count = 4)
+            ResultCards(count = 4) // Display result cards
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar() {
-
-    var value by remember { mutableStateOf("") }
+    var value by remember { mutableStateOf("") } // State to hold text input
     TextField(
         value = value,
         onValueChange = {
             value = it
         },
-        textStyle = TextStyle.Default.copy(fontSize = 15.sp),
+        textStyle = TextStyle.Default.copy(fontSize = 15.sp), // Set font size for text input
         shape = MaterialTheme.shapes.small,
         colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color(0xFFFEFAFD),
+            containerColor = Color(0xFFFEFAFD), // Set container color for text field
         ),
         leadingIcon = {
             Icon(
@@ -89,7 +86,7 @@ fun SearchBar() {
             )
         },
         modifier = Modifier
-            .height(48.dp)
+            .height(48.dp) // Set height for the text field
     )
 }
 
@@ -97,7 +94,7 @@ fun SearchBar() {
 fun ResultCards(count: Int) {
     LazyColumn {
         items(count) {
-            BreweryCard()
+            BreweryCard() // Display brewery cards based on count
         }
     }
 }
@@ -106,21 +103,21 @@ fun ResultCards(count: Int) {
 fun BreweryCard() {
     Card(
         modifier = Modifier
-            .width(450.dp)
-            .padding(12.dp)
-            .clickable { /* Handle card click */ }
-            .height(90.dp),
+            .width(450.dp) // Set width for the card
+            .padding(12.dp) // Add padding around the card
+            .clickable { /* Handle card click */ } // Handle click action for the card
+            .height(90.dp), // Set height for the card
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF976744),
+            containerColor = Color(0xFF976744), // Set container color for the card
         )
     ) {
         Image(
-            painter = painterResource(id = R.drawable.brewerypane),
+            painter = painterResource(id = R.drawable.brewerypane), // Set image for the card
             contentDescription = "",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(100.dp)
-                .alpha(0.3f)
+                .height(100.dp) // Set height for the image
+                .alpha(0.3f) // Set transparency for the image
         )
     }
 }

@@ -27,16 +27,17 @@ fun Home(navController: NavController) {
 @Composable
 fun UIPlacement(navController: NavController) {
     Column {
-        AppLogo()
-        SearchBrewCardLabel()
-        SearchBrewCard(navController)
-        RandomBrewCardLabel()
-        RandomBrewCard(navController)
+        AppLogo() // Display the app's logo
+        SearchBrewCardLabel() // Display the label for searching breweries
+        SearchBrewCard(navController) // Display the card for searching breweries
+        RandomBrewCardLabel() // Display the label for a random brewery
+        RandomBrewCard(navController) // Display the card for a random brewery
     }
 }
 
 @Composable
-fun AppLogo(){
+fun AppLogo() {
+    // Display the app's logo with specified properties
     Image(
         painter = painterResource(id = R.drawable.logo),
         contentDescription = "",
@@ -48,7 +49,8 @@ fun AppLogo(){
 }
 
 @Composable
-fun SearchBrewCardLabel(){
+fun SearchBrewCardLabel() {
+    // Display the label for searching breweries with specified style and properties
     Text(
         text = "Search Breweries",
         modifier = Modifier
@@ -63,26 +65,26 @@ fun SearchBrewCardLabel(){
 
 @Composable
 fun SearchBrewCard(navController: NavController) {
-
+    // Display the card for searching breweries with specified properties and a click action to navigate
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)
             .clickable {
-                navController.navigate("search")
+                navController.navigate("search") // Navigate to the search destination
             }
             .height(220.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFFBE29E),
         )
     ) {
-        SearchBrewCardContent()
+        SearchBrewCardContent() // Display the content of the search brewery card
     }
-
 }
 
 @Composable
-fun SearchBrewCardContent(){
+fun SearchBrewCardContent() {
+    // Display the content of the search brewery card with an image and text
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.CenterStart
@@ -93,25 +95,25 @@ fun SearchBrewCardContent(){
             modifier = Modifier
                 .fillMaxHeight()
                 .aspectRatio(1f) // Maintain aspect ratio of the image
-                .alpha(0.5f)
+                .alpha(0.5f) // Set the transparency of the image
         )
 
         Text(
             text = "Search Breweries by Name, Type, Country, City, or State.",
             modifier = Modifier
-                .padding(start= 200.dp),
+                .padding(start = 200.dp), // Set padding for the text
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
                 fontSize = 25.sp,
                 color = Color(0xFF91572B), // Set text color
-
             )
         )
     }
 }
 
 @Composable
-fun RandomBrewCardLabel(){
+fun RandomBrewCardLabel() {
+    // Display the label for a random brewery with specified style and properties
     Text(
         text = "Random Brewery",
         modifier = Modifier
@@ -125,26 +127,27 @@ fun RandomBrewCardLabel(){
 }
 
 @Composable
-fun RandomBrewCard(navController: NavController){
-
+fun RandomBrewCard(navController: NavController) {
+    // Display the card for a random brewery with specified properties and a click action to navigate
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)
             .clickable {
-                navController.navigate("random")
+                navController.navigate("random") // Navigate to the random destination
             }
             .height(220.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFFFBE29E),
         )
     ) {
-        RandomBrewCardContent()
+        RandomBrewCardContent() // Display the content of the random brewery card
     }
 }
 
 @Composable
 fun RandomBrewCardContent() {
+    // Display the content of the random brewery card with an image and text
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.CenterEnd
@@ -155,12 +158,12 @@ fun RandomBrewCardContent() {
             modifier = Modifier
                 .fillMaxHeight()
                 .aspectRatio(1f) // Maintain aspect ratio of the image
-                .alpha(0.5f)
+                .alpha(0.5f) // Set the transparency of the image
         )
         Text(
             text = "Find a Random Brewery Here.",
             modifier = Modifier
-                .padding(start = 20.dp, end= 80.dp),
+                .padding(start = 20.dp, end = 80.dp), // Set padding for the text
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
