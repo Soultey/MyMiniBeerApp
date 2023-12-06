@@ -3,7 +3,7 @@ package com.example.lecture11code.ui.main
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.List
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -18,7 +18,7 @@ fun MyBottomNavBar(navController: NavController) {
     val navItems = listOf(
         NavItem(Icons.Rounded.Home, Screen.HOME.route),
         NavItem(Icons.Rounded.Add, Screen.RANDOM.route),
-        NavItem(Icons.Rounded.Search, Screen.SEARCH.route)
+        NavItem(Icons.Rounded.List, Screen.SEARCH.route)
     )
 
     NavigationBar(

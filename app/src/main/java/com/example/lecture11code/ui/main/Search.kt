@@ -115,7 +115,7 @@ fun BreweryCard() {
         )
     ) {
         Image(
-            painter = painterResource(id = R.drawable.brewerypane2),
+            painter = painterResource(id = R.drawable.brewerypane),
             contentDescription = "",
             modifier = Modifier
                 .fillMaxWidth()
