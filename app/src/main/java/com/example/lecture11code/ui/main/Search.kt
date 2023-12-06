@@ -32,10 +32,8 @@ import androidx.compose.ui.unit.dp
 import com.example.lecture11code.R
 
 @Composable
-fun Search() {
-
+fun Search(){
     ComponentPlacement()
-
 }
 
 
