@@ -62,7 +62,7 @@ fun SearchBrewCardLabel(){
 }
 
 @Composable
-fun SearchBrewCard(navController: NavController){
+fun SearchBrewCard(navController: NavController) {
 
     Card(
         modifier = Modifier
@@ -76,33 +76,38 @@ fun SearchBrewCard(navController: NavController){
             containerColor = Color(0xFFFBE29E),
         )
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.searchbeer),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .aspectRatio(1f) // Maintain aspect ratio of the image
-                    .alpha(0.5f)
-            )
-
-            Text(
-                text = "Search Breweries by Name, Type, Country, City, or State.",
-                modifier = Modifier
-                    .padding(start= 200.dp),
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 25.sp,
-                    color = Color(0xFF91572B), // Set text color
-
-                )
-            )
-        }
+        SearchBrewCardContent()
     }
 
+}
+
+@Composable
+fun SearchBrewCardContent(){
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.searchbeer),
+            contentDescription = "",
+            modifier = Modifier
+                .fillMaxHeight()
+                .aspectRatio(1f) // Maintain aspect ratio of the image
+                .alpha(0.5f)
+        )
+
+        Text(
+            text = "Search Breweries by Name, Type, Country, City, or State.",
+            modifier = Modifier
+                .padding(start= 200.dp),
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 25.sp,
+                color = Color(0xFF91572B), // Set text color
+
+            )
+        )
+    }
 }
 
 @Composable
@@ -134,28 +139,33 @@ fun RandomBrewCard(navController: NavController){
             containerColor = Color(0xFFFBE29E),
         )
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.randombeer),
-                contentDescription = "",
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .aspectRatio(1f) // Maintain aspect ratio of the image
-                    .alpha(0.5f)
+        RandomBrewCardContent()
+    }
+}
+
+@Composable
+fun RandomBrewCardContent() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.CenterEnd
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.randombeer),
+            contentDescription = "",
+            modifier = Modifier
+                .fillMaxHeight()
+                .aspectRatio(1f) // Maintain aspect ratio of the image
+                .alpha(0.5f)
+        )
+        Text(
+            text = "Find a Random Brewery Here.",
+            modifier = Modifier
+                .padding(start = 20.dp, end= 80.dp),
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 30.sp,
+                color = Color(0xFF91572B),
             )
-            Text(
-                text = "Find a Random Brewery Here.",
-                modifier = Modifier
-                    .padding(start = 20.dp, end= 80.dp),
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp,
-                    color = Color(0xFF91572B),
-                )
-            )
-        }
+        )
     }
 }
