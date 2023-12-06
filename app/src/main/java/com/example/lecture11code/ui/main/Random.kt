@@ -46,11 +46,11 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lecture11code.R
-import com.example.lecture11code.data.ArtPiece
+import com.example.lecture11code.data.Breweries
 import kotlinx.coroutines.launch
 
 @Composable
-fun Random(artState: ArtState){
+fun Random(artState: BreweryState){
 
     val currentArtIndex = remember { mutableIntStateOf(0) }
 
@@ -63,7 +63,7 @@ fun Random(artState: ArtState){
             .background(Color(0xFFFFFFFF))
             .fillMaxSize(),
         content = {
-            items(artState.artwork.value.size) {
+            items(artState.breweryCollection.value.size) {
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -78,7 +78,7 @@ fun Random(artState: ArtState){
                     ) {}
 
                     DisplayArtPiece(
-                        artState.artwork.value[currentArtIndex.intValue],
+                        artState.breweryCollection.value[currentArtIndex.intValue],
                     )
 
                 }
@@ -88,7 +88,7 @@ fun Random(artState: ArtState){
 }
 
 @Composable
-fun DisplayArtPiece(artPiece: ArtPiece) {
+fun DisplayArtPiece(breweries: Breweries) {
 
     val (showAdditionalInfo, setShowAdditionalInfo) = remember { mutableStateOf(false) }
 
@@ -120,13 +120,13 @@ fun DisplayArtPiece(artPiece: ArtPiece) {
             }
 
     ) {
-        CardContent(showAdditionalInfo, artPiece, imageResource, nameTextSize, isIconRotated, cityTextSize)
+        CardContent(showAdditionalInfo, breweries, imageResource, nameTextSize, isIconRotated, cityTextSize)
     }
 }
 
 
 @Composable
-fun CardContent(showAdditionalInfo: Boolean, artPiece: ArtPiece, imageResource: Int, nameTextSize: TextUnit, isIconRotated: Boolean, cityTextSize: TextUnit ){
+fun CardContent(showAdditionalInfo: Boolean, breweries: Breweries, imageResource: Int, nameTextSize: TextUnit, isIconRotated: Boolean, cityTextSize: TextUnit ){
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = imageResource),
@@ -146,7 +146,7 @@ fun CardContent(showAdditionalInfo: Boolean, artPiece: ArtPiece, imageResource: 
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = artPiece.name ?: "No name",
+                    text = breweries.name ?: "No name",
                     style = TextStyle(
                         fontSize = nameTextSize,
                         color = Color.White
@@ -173,7 +173,7 @@ fun CardContent(showAdditionalInfo: Boolean, artPiece: ArtPiece, imageResource: 
             ) {
                 Column {
                     Text(
-                        text = artPiece.city ?: "", style = TextStyle(
+                        text = breweries.city ?: "", style = TextStyle(
                             color = Color.White,
                             fontSize = cityTextSize,
 
@@ -181,7 +181,7 @@ fun CardContent(showAdditionalInfo: Boolean, artPiece: ArtPiece, imageResource: 
                     )
                 }
             }
-            ShowAddInfo(showAdditionalInfo, artPiece)
+            ShowAddInfo(showAdditionalInfo, breweries)
         }
     }
 
@@ -189,7 +189,7 @@ fun CardContent(showAdditionalInfo: Boolean, artPiece: ArtPiece, imageResource: 
 }
 
 @Composable
-fun ShowAddInfo(showAdditionalInfo: Boolean, artPiece: ArtPiece){
+fun ShowAddInfo(showAdditionalInfo: Boolean, breweries: Breweries){
     if (showAdditionalInfo) {
         Surface(
             modifier = Modifier
@@ -202,21 +202,21 @@ fun ShowAddInfo(showAdditionalInfo: Boolean, artPiece: ArtPiece){
             ) {
 
                 Text(
-                    text = "Type: ${artPiece.type ?: "No type"}",
+                    text = "Type: ${breweries.type ?: "No type"}",
                     style = TextStyle(
                         fontSize = 20.sp,
                         color = Color.White
                     )
                 )
                 Text(
-                    text = "State/Province: ${artPiece.stateProvince ?: "No state/province"}",
+                    text = "State/Province: ${breweries.stateProvince ?: "No state/province"}",
                     style = TextStyle(
                         fontSize = 20.sp,
                         color = Color.White
                     )
                 )
                 Text(
-                    text = "Country: ${artPiece.country ?: "No country"}",
+                    text = "Country: ${breweries.country ?: "No country"}",
                     style = TextStyle(
                         fontSize = 20.sp,
                         color = Color.White
@@ -237,14 +237,14 @@ fun ShowAddInfo(showAdditionalInfo: Boolean, artPiece: ArtPiece){
                     )
                 )
                 Text(
-                    text = "Website URL: ${artPiece.websiteUrl ?: "No website URL"}",
+                    text = "Website URL: ${breweries.websiteUrl ?: "No website URL"}",
                     style = TextStyle(
                         fontSize = 20.sp,
                         color = Color.White
                     )
                 )
                 Text(
-                    text = "Phone: ${artPiece.phone ?: "No phone"}", style = TextStyle(
+                    text = "Phone: ${breweries.phone ?: "No phone"}", style = TextStyle(
                         fontSize = 20.sp,
                         color = Color.White
                     )

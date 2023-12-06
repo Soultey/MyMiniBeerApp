@@ -1,15 +1,14 @@
-// PROJECT CODE *************************************************************
 
 package com.example.lecture11code.data
 
 import com.google.gson.annotations.SerializedName
 
-data class Art(
+data class Brewery(
     @SerializedName("data")
-    val pieces: List<ArtPiece>
+    val breweries: List<Breweries>
 )
 
-data class ArtPiece(
+data class Breweries(
 
     val id: String,
     val name: String?,

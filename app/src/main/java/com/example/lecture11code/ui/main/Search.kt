@@ -52,7 +52,7 @@ fun ComponentPlacement() {
         Column {
             Text(
                 text = "Search Breweries",
-                style = TextStyle(fontSize = 24.sp) // Set the desired font size
+                style = TextStyle(fontSize = 24.sp)
             )
         }
 
@@ -78,7 +78,7 @@ fun SearchBar() {
             value = it
         },
         textStyle = TextStyle.Default.copy(fontSize = 15.sp),
-        shape = MaterialTheme.shapes.small, // Use small rounded shape
+        shape = MaterialTheme.shapes.small,
         colors = TextFieldDefaults.textFieldColors(
             containerColor = Color(0xFFFEFAFD),
         ),
@@ -89,7 +89,7 @@ fun SearchBar() {
             )
         },
         modifier = Modifier
-            .height(48.dp) // Adjust the height of the TextField
+            .height(48.dp)
     )
 }
 
@@ -114,7 +114,6 @@ fun BreweryCard() {
             containerColor = Color(0xFF976744),
         )
     ) {
-        // You can customize the content inside the card here
         Image(
             painter = painterResource(id = R.drawable.brewerypane2),
             contentDescription = "",

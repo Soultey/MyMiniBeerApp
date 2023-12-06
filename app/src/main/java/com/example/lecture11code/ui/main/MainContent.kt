@@ -20,7 +20,7 @@ enum class Screen(val route: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainContent(artState: ArtState) {
+fun MainContent(breweryState: BreweryState) {
 
     val navController = rememberNavController()
 
@@ -38,7 +38,7 @@ fun MainContent(artState: ArtState) {
                     Home(navController)
                 }
                 composable("random") {
-                    Random(artState)
+                    Random(breweryState)
                 }
                 composable("search") {
                     Search()
@@ -48,3 +48,4 @@ fun MainContent(artState: ArtState) {
     }
 
 }
+
